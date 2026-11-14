@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مخبز السنبلة | طازج كل يوم من الفرن لبيتك</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #c27803;
+      --primary-dark: #925400;
+      --primary-light: #fef08a;
+      --secondary: #78350f;
+      --dark: #291807;
+      --light: #fffdfa;
+      --card-bg: #ffffff;
+      --border: #f3e8d2;
+      --text: #372b21;
+      --text-muted: #736456;
+      --badge-bg: #fef3c7;
+      --badge-color: #92400e;
+      --radius: 16px;
+      --shadow: 0 10px 25px -5px rgba(120, 53, 15, 0.08), 0 8px 10px -6px rgba(120, 53, 15, 0.04);
+      --shadow-hover: 0 20px 30px -10px rgba(120, 53, 15, 0.15);
+      --transition: all 0.25s ease-in-out;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Cairo', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--light);
+      color: var(--text);
+      line-height: 1.7;
+      direction: rtl;
+      text-align: right;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Container */
+    .container {
+      width: 100%;
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Header & Navigation */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 253, 250, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--secondary);
+    }
+
+    .logo-icon {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      box-shadow: 0 4px 10px rgba(217, 119, 6, 0.3);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-weight: 600;
+      color: var(--text);
+      transition: var(--transition);
+      font-size: 0.95rem;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 60px 0 50px;
+      text-align: center;
+      position: relative;
+      background: radial-gradient(circle at center, #fef7ea 0%, #fffdfa 70%);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--badge-bg);
+      color: var(--badge-color);
+      padding: 6px 18px;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      border: 1px solid #fde68a;
+    }
+
+    .hero h1 {
+      font-size: 2.8rem;
+      font-weight: 900;
+      color: var(--secondary);
+      margin-bottom: 15px;
+      line-height: 1.25;
+    }
+
+    .hero-slogan {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 20px;
+    }
+
+    .hero-desc {
+      max-width: 680px;
+      margin: 0 auto 30px;
+      font-size: 1.15rem;
+      color: var(--text-muted);
+    }
+
+    .hero-tags {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 35px;
+    }
+
+    .hero-tag {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 6px 16px;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--secondary);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #d97706, #b45309);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(180, 83, 9, 0.35);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #b45309, #92400e);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(180, 83, 9, 0.45);
+    }
+
+    .btn-outline {
+      background: #ffffff;
+      color: var(--secondary);
+      border: 2px solid var(--border);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--primary);
+      color: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    /* Section Headers */
+    .section {
+      padding: 70px 0;
+    }
+
+    .section-title-wrap {
+      text-align: center;
+      margin-bottom: 45px;
+    }
+
+    .section-subtitle {
+      color: var(--primary);
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .section-title {
+      font-size: 2.1rem;
+      font-weight: 800;
+      color: var(--secondary);
+    }
+
+    /* Products Grid */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .product-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #f59e0b, #d97706);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+      border-color: #fde68a;
+    }
+
+    .product-card:hover::before {
+      opacity: 1;
+    }
+
+    .product-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 15px;
+    }
+
+    .product-name {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--dark);
+    }
+
+    .product-unit {
+      display: inline-block;
+      background: #fafaf9;
+      color: var(--text-muted);
+      border: 1px solid #e7e5e4;
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+      width: fit-content;
+    }
+
+    .product-price-box {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      padding-top: 15px;
+      border-top: 1px dashed var(--border);
+    }
+
+    .product-price {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+    }
+
+    /* Hours & Location Cards */
+    .info-layout {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 25px;
+    }
+
+    .info-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 32px;
+      box-shadow: var(--shadow);
+    }
+
+    .info-card-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .info-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: #fef3c7;
+      color: #b45309;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+
+    .info-card-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--secondary);
+    }
+
+    /* Hours Table */
+    .hours-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .hours-table th,
+    .hours-table td {
+      padding: 14px 12px;
+      text-align: right;
+    }
+
+    .hours-table tr {
+      border-bottom: 1px solid #f5f0e8;
+    }
+
+    .hours-table tr:last-child {
+      border-bottom: none;
+    }
+
+    .hours-table th {
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .hours-day {
+      font-weight: 700;
+      color: var(--dark);
+    }
+
+    .hours-time {
+      font-weight: 600;
+      color: var(--primary-dark);
+    }
+
+    /* Contact Details */
+    .contact-item {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 20px;
+      align-items: flex-start;
+    }
+
+    .contact-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .contact-item-icon {
+      color: var(--primary);
+      margin-top: 3px;
+      font-size: 1.1rem;
+    }
+
+    .contact-label {
+      font-weight: 700;
+      color: var(--dark);
+      font-size: 0.95rem;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .contact-val {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    .phone-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+
+    .phone-link {
+      direction: ltr;
+      display: inline-block;
+      background: #fdf8ef;
+      border: 1px solid #fae6be;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-weight: 700;
+      color: var(--secondary);
+      transition: var(--transition);
+      font-size: 0.95rem;
+    }
+
+    .phone-link:hover {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    .delivery-note {
+      background: #fffbeb;
+      border: 1px dashed #f59e0b;
+      padding: 16px;
+      border-radius: 12px;
+      margin-top: 20px;
+    }
+
+    .delivery-note-title {
+      font-weight: 700;
+      color: #92400e;
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .delivery-note p {
+      font-size: 0.92rem;
+      color: #78350f;
+    }
+
+    /* Limitations / What we don't have */
+    .limitations-section {
+      background: #fff9f0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .limitations-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .limitation-item {
+      background: #ffffff;
+      border: 1px solid #fee2e2;
+      border-radius: 14px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+    }
+
+    .limitation-icon {
+      width: 40px;
+      height: 40px;
+      background: #fef2f2;
+      border-radius: 10px;
+      color: #dc2626;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .limitation-text {
+      font-weight: 600;
+      color: #7f1d1d;
+      font-size: 0.95rem;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--dark);
+      color: #e5ded7;
+      padding: 40px 0 25px;
+      border-top: 4px solid var(--primary);
+    }
+
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 15px;
+    }
+
+    .footer-logo {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .footer-slogan {
+      color: #fde68a;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .footer-copy {
+      font-size: 0.85rem;
+      color: #a89a8f;
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      width: 100%;
+    }
+
+    /* Mobile Responsive */
+    .mobile-sticky-bar {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding-bottom: 75px;
+      }
+
+      .mobile-sticky-bar {
+        display: block;
+        position: fixed;
+        bottom: 12px;
+        left: 15px;
+        right: 15px;
+        z-index: 999;
+      }
+      .navbar {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px 16px;
+      }
+
+      .hero {
+        padding: 40px 0 35px;
+      }
+
+      .hero h1 {
+        font-size: 2.1rem;
+      }
+
+      .hero-slogan {
+        font-size: 1.2rem;
+      }
+
+      .hero-desc {
+        font-size: 1rem;
+      }
+
+      .section {
+        padding: 45px 0;
+      }
+
+      .section-title {
+        font-size: 1.7rem;
+      }
+
+      .info-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .products-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header / Navigation -->
+  <header>
+    <div class="container navbar">
+      <a href="#" class="logo">
+        <span class="logo-icon">🌾</span>
+        <span>مخبز السنبلة</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#about">عن المخبز</a></li>
+        <li><a href="#products">المنتجات والأسعار</a></li>
+        <li><a href="#hours">المواعيد</a></li>
+        <li><a href="#contact">العنوان والتواصل</a></li>
+        <li><a href="#notes">تنبيهات</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="about">
+    <div class="container">
+      <div class="hero-badge">
+        <span>✨</span>
+        <span>طازج كل يوم من الفرن لبيتك</span>
+      </div>
+      <h1>مخبز السنبلة</h1>
+      <p class="hero-slogan">«عيش السنبلة طازج كل يوم، من الفرن لبيتك»</p>
+      <p class="hero-desc">
+        مخبز يقدم عيش بلدي وخبز أفرنجي ومخبوزات وسندوتشات، باستخدام أفضل المكونات، وبأيدي طهاة محترفين.
+      </p>
+      
+      <div class="hero-tags">
+        <span class="hero-tag">🌾 مخبز بلدي</span>
+        <span class="hero-tag">🥖 مخبز أفرنجي</span>
+        <span class="hero-tag">🎂 حلواني</span>
+      </div>
+
+      <div class="hero-actions">
+        <a href="#products" class="btn btn-primary">
+          <span>قائمة المنتجات والأسعار</span>
+          <span>←</span>
+        </a>
+        <a href="#contact" class="btn btn-outline">
+          <span>اتصل بنا والطلب</span>
+          <span>📞</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Products Section -->
+  <section class="section" id="products">
+    <div class="container">
+      <div class="section-title-wrap">
+        <span class="section-subtitle">أصناف طازجة ومميزة</span>
+        <h2 class="section-title">المنتجات والأسعار</h2>
+      </div>
+
+      <div class="products-grid">
+        <!-- 1. عيش بلدي -->
+        <div class="product-card">
+          <div>
+            <div class="product-header">
+              <h3 class="product-name">عيش بلدي</h3>
+            </div>
+            <div class="product-unit">الوحدة: الرغيف</div>
+          </div>
+          <div class="product-price-box">
+            <span class="product-price">2 جنيه</span>
+          </div>
+        </div>
+
+        <!-- 2. عيش فينو -->
+        <div class="product-card">
+          <div>
+            <div class="product-header">
+              <h3 class="product-name">عيش فينو</h3>
+            </div>
+            <div class="product-unit">الوحدة: الرغيف</div>
+          </div>
+          <div class="product-price-box">
+            <span class="product-price">4 جنيه</span>
+          </div>
+        </div>
+
+        <!-- 3. كيزر (برجر) -->
+        <div class="product-card">
+          <div>
+            <div class="product-header">
+              <h3 class="product-name">كيزر (برجر)</h3>
+            </div>
+            <div class="product-unit">الوحدة: 4 أرغفة</div>
+          </div>
+          <div class="product-price-box">
+            <span class="product-price">10 جنيه</span>
+          </div>
+        </div>
+
+        <!-- 4. كرواسون سادة -->
+        <div class="product-card">
+          <div>
+            <div class="product-header">
+              <h3 class="product-name">كرواسون سادة</h3>
+            </div>
+            <div class="product-unit">الوحدة: 4 أرغفة</div>
+          </div>
+          <div class="product-price-box">
+            <span class="product-price">20 جنيه</span>
+          </div>
+        </div>
+
+        <!-- 5. باتيه جبنة -->
+        <div class="product-card">
+          <div>
+            <div class="product-header">
+              <h3 class="product-name">باتيه جبنة</h3>
+            </div>
+            <div class="product-unit">الوحدة: 4 أرغفة</div>
+          </div>
+          <div class="product-price-box">
+            <span class="product-price">25 جنيه</span>
+          </div>
+        </div>
+
+        <!-- 6. كرواسون شيكولاتة -->
+        <div class="product-card">
+          <div>
+            <div class="product-header">
+              <h3 class="product-name">كرواسون شيكولاتة</h3>
+            </div>
+            <div class="product-unit">الوحدة: للقطعة</div>
+          </div>
+          <div class="product-price-box">
+            <span class="product-price">30 جنيه</span>
+          </div>
+        </div>
+
+        <!-- 7. سندوتشات -->
+        <div class="product-card">
+          <div>
+            <div class="product-header">
+              <h3 class="product-name">سندوتشات</h3>
+            </div>
+            <div class="product-unit">الوحدة: للقطعة</div>
+          </div>
+          <div class="product-price-box">
+            <span class="product-price">10 جنيه</span>
+          </div>
+        </div>
+
+        <!-- 8. بيتي فور -->
+        <div class="product-card">
+          <div>
+            <div class="product-header">
+              <h3 class="product-name">بيتي فور</h3>
+            </div>
+            <div class="product-unit">الوحدة: للكيلو</div>
+          </div>
+          <div class="product-price-box">
+            <span class="product-price">150 جنيه</span>
+          </div>
+        </div>
+
+        <!-- 9. بسكويت -->
+        <div class="product-card">
+          <div>
+            <div class="product-header">
+              <h3 class="product-name">بسكويت</h3>
+            </div>
+            <div class="product-unit">الوحدة: للكيلو</div>
+          </div>
+          <div class="product-price-box">
+            <span class="product-price">120 جنيه</span>
+          </div>
+        </div>
+
+        <!-- 10. تورت وجاتوهات -->
+        <div class="product-card">
+          <div>
+            <div class="product-header">
+              <h3 class="product-name">تورت وجاتوهات</h3>
+            </div>
+            <div class="product-unit">الوحدة: -</div>
+          </div>
+          <div class="product-price-box">
+            <span class="product-price">حسب الطلب</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hours & Location / Contact Section -->
+  <section class="section" style="background-color: #faf7f2;" id="hours">
+    <div class="container">
+      <div class="section-title-wrap">
+        <span class="section-subtitle">نسعد بخدمتكم</span>
+        <h2 class="section-title">المواعيد والعنوان والتواصل</h2>
+      </div>
+
+      <div class="info-layout">
+        <!-- المواعيد -->
+        <div class="info-card">
+          <div class="info-card-header">
+            <div class="info-icon">🕒</div>
+            <h3 class="info-card-title">مواعيد العمل</h3>
+          </div>
+          <table class="hours-table">
+            <thead>
+              <tr>
+                <th>اليوم</th>
+                <th>من</th>
+                <th>إلى</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="hours-day">السبت للخميس</td>
+                <td class="hours-time">6 صباحاً</td>
+                <td class="hours-time">11 مساءً</td>
+              </tr>
+              <tr>
+                <td class="hours-day">الجمعة</td>
+                <td class="hours-time">6 صباحاً</td>
+                <td class="hours-time">2 ظهراً</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- العنوان والتواصل -->
+        <div class="info-card" id="contact">
+          <div class="info-card-header">
+            <div class="info-icon">📍</div>
+            <h3 class="info-card-title">العنوان والتواصل</h3>
+          </div>
+
+          <div class="contact-item">
+            <span class="contact-item-icon">📍</span>
+            <div>
+              <span class="contact-label">العنوان</span>
+              <span class="contact-val">15 شارع النيل، حي العجوزة، الجيزة، مصر.</span>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <span class="contact-item-icon">📞</span>
+            <div>
+              <span class="contact-label">أرقام التليفون للطلب والاستفسار</span>
+              <div class="phone-links">
+                <a href="tel:002000001111" class="phone-link">0020-0000-1111</a>
+                <a href="tel:002000002222" class="phone-link">0020-0000-2222</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="delivery-note">
+            <div class="delivery-note-title">
+              <span>🛵</span>
+              <span>خدمة التوصيل</span>
+            </div>
+            <p>توصيل كل يوم من 7 ص لـ 10 م، والطلب قبلها بـ 120 دقيقة.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Limitations / What we don't have -->
+  <section class="section limitations-section" id="notes">
+    <div class="container">
+      <div class="section-title-wrap" style="margin-bottom: 30px;">
+        <span class="section-subtitle">توضيحات هامة لعملائنا</span>
+        <h2 class="section-title" style="font-size: 1.8rem;">اللي مش عندنا</h2>
+      </div>
+
+      <div class="limitations-grid">
+        <div class="limitation-item">
+          <div class="limitation-icon">🚫</div>
+          <div class="limitation-text">مكان للجلوس جوه المخبز (تيك أواي بس).</div>
+        </div>
+
+        <div class="limitation-item">
+          <div class="limitation-icon">☕</div>
+          <div class="limitation-text">مشروبات سخنة.</div>
+        </div>
+
+        <div class="limitation-item">
+          <div class="limitation-icon">🚚</div>
+          <div class="limitation-text">توصيل خارج الجيزة.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-content">
+      <div class="footer-logo">🌾 مخبز السنبلة</div>
+      <p class="footer-slogan">«عيش السنبلة طازج كل يوم، من الفرن لبيتك»</p>
+      <p style="color: #c4b5a5; font-size: 0.95rem;">15 شارع النيل، حي العجوزة، الجيزة، مصر</p>
+      <div class="footer-copy">
+        جميع المعلومات مطابقة لورقة معلومات المخبز الرسمية.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Mobile Quick Action Call Bar -->
+  <div class="mobile-sticky-bar">
+    <a href="tel:002000001111" class="btn btn-primary" style="width: 100%; border-radius: 50px; box-shadow: 0 4px 15px rgba(180, 83, 9, 0.45); font-size: 1.05rem;">
+      <span>📞</span>
+      <span>اتصل للطلب: 0020-0000-1111</span>
+    </a>
+  </div>
+
+</body>
+</html>
