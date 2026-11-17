@@ -577,6 +577,23 @@
       min-height: 110px;
     }
 
+    .form-select {
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23d4af37' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: left 16px center;
+      padding-left: 42px;
+    }
+
+    .form-select option {
+      background: #141417;
+      color: #ffffff;
+      padding: 12px;
+    }
+
     .form-submit-btn {
       width: 100%;
       border: none;
@@ -1111,6 +1128,21 @@
               ></textarea>
             </div>
 
+            <div class="form-group">
+              <label for="contact-future" class="form-label">
+                إمكانية التواصل معك مستقبلاً <span class="required-star">*</span>
+              </label>
+              <select 
+                id="contact-future" 
+                name="future_contact" 
+                class="form-input form-select" 
+                required
+              >
+                <option value="نعم" selected>نعم، يمكنكم التواصل معي مستقبلاً</option>
+                <option value="لا">لا، أفضّل عدم التواصل مستقبلاً</option>
+              </select>
+            </div>
+
             <button type="submit" id="contact-submit-btn" class="btn btn-primary form-submit-btn">
               <span class="btn-text">إرسال الرسالة</span>
               <span class="btn-icon">📩</span>
@@ -1212,14 +1244,16 @@
         const nameInput = document.getElementById('contact-name');
         const phoneInput = document.getElementById('contact-phone');
         const messageInput = document.getElementById('contact-message');
+        const futureContactInput = document.getElementById('contact-future');
 
         const name = nameInput.value.trim();
         const phone = phoneInput.value.trim();
         const message = messageInput.value.trim();
+        const futureContact = futureContactInput ? futureContactInput.value : 'نعم';
 
         // التأكد من ملء كل الخانات المطلوبة
-        if (!name || !phone || !message) {
-          errorText.textContent = 'من فضلك املأ جميع الخانات المطلوبة (الاسم، الموبايل، والرسالة).';
+        if (!name || !phone || !message || !futureContact) {
+          errorText.textContent = 'من فضلك املأ جميع الخانات المطلوبة (الاسم، الموبايل، الرسالة، وتحديد إمكانية التواصل).';
           errorBox.style.display = 'flex';
           return;
         }
@@ -1238,8 +1272,12 @@
         btnIcon.textContent = '⏳';
 
         try {
-          // إرسال مباشر وسريع إلى Supabase REST API (متوافق 100% مع المفتاح العام الجديد)
-          const response = await fetch(`${SUPABASE_URL}/rest/v1/messages`, {
+          // تضمين خيار العميل للتواصل المستقبلي داخل نص الرسالة لضمان حفظه دائماً
+          const formattedMessage = `${message}\n\n[إمكانية التواصل مستقبلاً: ${futureContact}]`;
+
+          // إرسال مباشر وسريع إلى Supabase REST API
+          // 1. محاولة الإرسال بالحقل المخصص future_contact في حال توفره في جدول messages
+          let response = await fetch(`${SUPABASE_URL}/rest/v1/messages`, {
             method: 'POST',
             headers: {
               'apikey': SUPABASE_ANON_KEY,
@@ -1247,8 +1285,35 @@
               'Content-Type': 'application/json',
               'Prefer': 'return=minimal'
             },
-            body: JSON.stringify({ name, phone, message })
+            body: JSON.stringify({
+              name,
+              phone,
+              message: formattedMessage,
+              future_contact: futureContact === 'نعم'
+            })
           });
+
+          // 2. إذا كان الجدول لا يحتوي على العمود future_contact بعد (PGRST204)
+          // يتم الإرسال بالحقول الأصلية المضمونة مع بقاء الخيار مسجلاً داخل نص الرسالة
+          if (!response.ok && response.status === 400) {
+            const errClone = await response.clone().json().catch(() => ({}));
+            if (errClone.code === 'PGRST204' || (errClone.message && errClone.message.includes('future_contact'))) {
+              response = await fetch(`${SUPABASE_URL}/rest/v1/messages`, {
+                method: 'POST',
+                headers: {
+                  'apikey': SUPABASE_ANON_KEY,
+                  'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                  'Content-Type': 'application/json',
+                  'Prefer': 'return=minimal'
+                },
+                body: JSON.stringify({
+                  name,
+                  phone,
+                  message: formattedMessage
+                })
+              });
+            }
+          }
 
           if (!response.ok) {
             const errData = await response.json().catch(() => ({}));
